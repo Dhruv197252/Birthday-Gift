@@ -16,6 +16,12 @@ const MUSIC_SRC = "music.webm";
 const LANDING_BG_IMAGES = [
   // "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop",
   "/PIC.jpg",
+  "/pic10.jpg",
+  "/pic9.jpg",
+  "/pic8.jpg",
+  "/pic7.jpg",
+  "/pic6.jpg",
+
 
   // "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop",
   // "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1000&auto=format&fit=crop"
@@ -96,7 +102,7 @@ function PasswordGate({ onUnlock }) {
            <span className="text-4xl">🐱</span>
         </div>
         <h2 className="text-3xl mb-3 font-serif italic tracking-wide">Secret Entry</h2>
-        <p className="text-rose-200/80 mb-8 text-sm font-light">The key to my heart (and the cats) is the password...</p>
+        <p className="text-rose-200/80 mb-8 text-sm font-light">Hint: What else can be the password when your birth date exists!!!</p>
         
         <input
           type="password"
@@ -105,7 +111,7 @@ function PasswordGate({ onUnlock }) {
           placeholder="Enter password"
           className="w-full p-4 rounded-xl bg-black/20 mb-4 outline-none border border-white/5 focus:border-rose-400/50 transition-colors text-center tracking-[0.5em] text-lg placeholder:tracking-normal placeholder:text-white/20"
         />
-        {error && <p className="text-rose-400 mb-4 text-sm animate-pulse font-medium">Try again, love 🐾</p>}
+        {error && <p className="text-rose-400 mb-4 text-sm animate-pulse font-medium">Koi na, Ek aur baar try karlo, PLEASE!!! 🐾</p>}
         <button 
           onClick={check} 
           className="w-full py-4 bg-gradient-to-r from-rose-600 to-pink-600 rounded-xl font-bold shadow-lg shadow-rose-900/40 hover:scale-[1.02] hover:shadow-rose-500/20 transition-all duration-300 flex items-center justify-center gap-2"
@@ -154,14 +160,14 @@ function LandingPage({ onNext }) {
   const [stage, setStage] = useState(0);
   const [typedText, setTypedText] = useState("");
   const [bgIndex, setBgIndex] = useState(0);
-  const fullText = "Yes, it is you...";
+  const fullText = "INDEED!!! it has to be YOUUUUUUUU";
 
   // Background rotater for final stage
   useEffect(() => {
     if (stage === 4) {
       const interval = setInterval(() => {
         setBgIndex(prev => (prev + 1) % LANDING_BG_IMAGES.length);
-      }, 5000); // Slower background rotation
+      }, 6000); // Slower background rotation
       return () => clearInterval(interval);
     }
   }, [stage]);
@@ -169,18 +175,18 @@ function LandingPage({ onNext }) {
   // Sequence Controller
   useEffect(() => {
     let timer;
-    if (stage === 0) timer = setTimeout(() => setStage(1), 4000); // "You know what?"
-    else if (stage === 1) timer = setTimeout(() => setStage(2), 5000); // "21 years ago..."
+    if (stage === 0) timer = setTimeout(() => setStage(1), 3000); // "You know what?"
+    else if (stage === 1) timer = setTimeout(() => setStage(2), 9000); // "21 years ago..."
     else if (stage === 2) timer = setTimeout(() => setStage(3), 6000); // "Guess her name..."
     else if (stage === 3) {
       // Typewriter logic for "Yes, it is you..."
       if (typedText.length < fullText.length) {
         timer = setTimeout(() => {
           setTypedText(fullText.slice(0, typedText.length + 1));
-        }, 600); // Much slower typing speed (400ms per letter)
+        }, 200); // Much slower typing speed (400ms per letter)
       } else {
         // Finished typing, wait a bit then reveal
-        timer = setTimeout(() => setStage(4), 2500);
+        timer = setTimeout(() => setStage(4), 1500);
       }
     }
     return () => clearTimeout(timer);
@@ -203,17 +209,17 @@ function LandingPage({ onNext }) {
         <AnimatePresence mode="wait">
           {stage === 0 && (
             <motion.h2 key="step0" {...fadeText} className="text-3xl md:text-5xl font-serif text-rose-100 italic tracking-wider leading-relaxed">
-              You know what?
+              You know what??
             </motion.h2>
           )}
           {stage === 1 && (
             <motion.h2 key="step1" {...fadeText} className="text-3xl md:text-5xl font-serif text-rose-100 italic leading-relaxed">
-              <span className="text-rose-400">21 years ago</span>, <br/> a beautiful soul graced this world...
+              <span className="text-rose-400"><p><b>21</b> YEARS AGO ,</p></span><br/> <p> The World Was Quietly Blessed By </p><br /><p> The Arrival Of A Beautiful Soul.</p>
             </motion.h2>
           )}
           {stage === 2 && (
             <motion.h2 key="step2" {...fadeText} className="text-3xl md:text-5xl font-serif text-rose-100 italic tracking-wider">
-              Can you guess who?
+              SOCHO SOCHO 🐱
             </motion.h2>
           )}
         </AnimatePresence>
@@ -279,7 +285,7 @@ function LandingPage({ onNext }) {
             whileTap={{ scale: 0.95 }}
             className="px-10 py-4 bg-gradient-to-r from-rose-600 to-pink-600 rounded-full text-lg font-medium tracking-widest uppercase shadow-[0_0_30px_rgba(225,29,72,0.4)] flex items-center gap-3 mx-auto border border-white/20 hover:bg-rose-500 transition-all"
           >
-            Open Our Story <ChevronRight className="w-5 h-5" />
+          CLICK HERE, PLEASE!!!!😺 <ChevronRight className="w-5 h-5" />
           </motion.button>
         </motion.div>
       </div>
@@ -287,28 +293,69 @@ function LandingPage({ onNext }) {
   );
 }
 
-// ================= BOOK =================
+
+
+
+// ================= BOOK (ROMANTIC & JOYFUL EDITION) =================
 
 function BookPage({ onNext }) {
-  const chapters = 6;
+  // 1. CONFIGURATION: Stories for the first 3 pages
+  const storyContent = [
+    {
+      id: 1,
+      image: "/pic1.jpg", 
+      text1: "The first time we met, I honestly didn't think much of it.",
+      text2: "But as the days went by, I realized that my smile started appearing more often when you were around.",
+      highlight: "It was the beginning of everything."
+    },
+    {
+      id: 2,
+      image: "/pic2.jpg", 
+      text1: "Do you remember that late night conversation?",
+      text2: "We talked about stars and dreams, and I realized that my favorite dream was actually sitting right in front of me.",
+      highlight: "You became my safe space."
+    },
+    {
+      id: 3,
+      image: "/pic3.jpg", 
+      text1: "And now, here we are. 21 beautiful years of your existence.",
+      text2: "I cannot promise to solve all your problems, but I promise you won't have to face them alone.",
+      highlight: "I love you, always."
+    }
+  ];
+
+  // 2. CONFIGURATION: Images for the Collage (Page 4) - 6 Photos
+  const collageImages = [
+    "/pic4.jpg", 
+    "/pic3.jpg", 
+    "/pic6.jpg", 
+    "/pic7.jpg",
+    "/pic8.jpg",
+    "/pic9.jpg"
+  ];
+
+  const chapters = 4; // 3 Stories + 1 Collage
   const [chapter, setChapter] = useState(0);
   const [direction, setDirection] = useState(0);
 
-  const isGallery = chapter === chapters - 1;
-
   const navigate = (newChapter) => {
-      setDirection(newChapter > chapter ? 1 : -1);
-      setChapter(newChapter);
+    setDirection(newChapter > chapter ? 1 : -1);
+    setChapter(newChapter);
   };
+
+  const isCollage = chapter === 3;
+  const currentStory = storyContent[chapter];
 
   return (
     <div className="w-full max-w-5xl px-4">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-serif text-rose-100 italic">Chapter {chapter + 1}</h2>
+        <h2 className="text-3xl font-serif text-rose-100 italic">
+          {isCollage ? "A Gallery of You" : `Chapter ${chapter + 1}`}
+        </h2>
         <div className="h-0.5 w-16 bg-rose-500 mx-auto mt-2 rounded-full opacity-60"></div>
       </div>
 
-      <div className="relative perspective-1000 min-h-[500px] mb-8">
+      <div className="relative perspective-1000 min-h-[600px] mb-8">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={chapter}
@@ -317,24 +364,93 @@ function BookPage({ onNext }) {
             animate={{ rotateY: 0, opacity: 1, scale: 1 }}
             exit={{ rotateY: direction === 1 ? -20 : 20, opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex flex-col md:flex-row bg-[#fff1f2] rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden border-4 border-[#fce7f3]"
+            className={`rounded-3xl shadow-2xl overflow-hidden border-4 border-white/50 ${
+                isCollage ? "" : "bg-[#fff1f2] border-[#fce7f3]"
+            }`}
           >
-            {!isGallery ? (
-              <>
+            {/* CONDITIONAL RENDERING */}
+            {isCollage ? (
+               // === DREAMY COLLAGE PAGE (Page 4) ===
+               <div className="relative w-full h-full min-h-[600px] overflow-hidden flex flex-col items-center justify-center p-8">
+                 
+                 {/* 1. ROMANTIC BACKGROUND: Soft Sunset Gradient */}
+                 <div className="absolute inset-0 bg-gradient-to-br from-pink-200 via-rose-100 to-orange-100" />
+                 
+                 {/* 2. FAIRY LIGHTS / ORBS: Floating ambient glows */}
+                 <div className="absolute top-[-20%] left-[-20%] w-96 h-96 bg-purple-300/30 rounded-full blur-[80px] animate-pulse"></div>
+                 <div className="absolute bottom-[-20%] right-[-20%] w-96 h-96 bg-yellow-200/40 rounded-full blur-[80px] animate-pulse delay-1000"></div>
+
+                 {/* Content Container (Glassmorphism) */}
+                 <div className="relative z-10 w-full max-w-4xl">
+                     <motion.div 
+                        initial={{ y: -20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        className="text-center mb-8"
+                     >
+                       <div className="inline-block bg-white/40 backdrop-blur-sm px-6 py-2 rounded-full border border-white/50 shadow-sm mb-4">
+                           <span className="text-rose-500 font-bold tracking-widest text-xs uppercase">The Birthday Girl</span>
+                       </div>
+                       <h2 className="text-4xl md:text-6xl font-serif text-rose-600 drop-shadow-sm">
+                         Happiest Wala Happy Birthday Shreya!! <span className="text-4xl">✨💚</span>
+                       </h2>
+                     </motion.div>
+
+                     {/* 3 Columns x 2 Rows Grid */}
+                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+                        {collageImages.map((img, index) => (
+                          <motion.div 
+                            key={index}
+                            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            transition={{ delay: index * 0.1, type: "spring" }}
+                            whileHover={{ y: -5, scale: 1.02 }}
+                            className="group relative aspect-[4/5] bg-white p-2 rounded-xl shadow-lg rotate-0 hover:rotate-1 transition-all duration-300"
+                          >
+                             <div className="w-full h-full overflow-hidden rounded-lg relative">
+                               <img src={img} className="w-full h-full object-cover" alt="Memory" />
+                               {/* Shine effect overlay */}
+                               <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                             </div>
+                          </motion.div>
+                        ))}
+                     </div>
+
+                     {/* The Poem Note */}
+                     <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.8 }}
+                        className="mt-10 text-center"
+                     >
+                        <div className="bg-white/60 backdrop-blur-md border border-white/60 p-6 rounded-2xl shadow-sm inline-block max-w-lg mx-auto">
+                             <p className="text-rose-800 font-handwriting text-xl md:text-2xl leading-relaxed">
+                               "Tumhe Toh Har Khushi Ka Haq Hai...<br/>
+                               Ek Baar Haq Jata Ke Toh Dekho,<br/>
+                               Fir Tum Khushi Ko Nahi,<br/>
+                               <span className="text-rose-600 font-bold">Khushi Khud Tumhe Chunegi!! ❤️"</span>
+                             </p>
+                        </div>
+                     </motion.div>
+                 </div>
+               </div>
+
+            ) : (
+              // === STORY PAGES (Pages 1-3) ===
+              <div className="flex flex-col md:flex-row min-h-[600px]">
                 {/* Left Page (Image) */}
                 <div className="w-full md:w-1/2 p-6 md:p-10 flex items-center justify-center bg-[#fff1f2] border-b md:border-b-0 md:border-r border-rose-200/50 relative">
                   <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/paper.png')] opacity-60 mix-blend-multiply" />
                   <div className="relative w-full aspect-[3/4] bg-white p-3 shadow-xl rotate-[-2deg] transition-transform hover:rotate-0 duration-500">
                     <div className="w-full h-full bg-rose-100/50 flex flex-col items-center justify-center text-rose-400 border border-rose-100 relative overflow-hidden">
-                       <Heart className="w-12 h-12 mb-3 opacity-40" />
-                       <span className="font-handwriting text-sm uppercase tracking-widest opacity-60">Memory #{chapter + 1}</span>
-                       
-                       {/* Cat Sticker on Photo */}
-                       <div className="absolute bottom-2 right-2 opacity-80 text-2xl">
-                         🐾
-                       </div>
+                      <img 
+                        src={currentStory.image} 
+                        alt="Memory" 
+                        className="w-full h-full object-cover opacity-90 hover:scale-110 transition-transform duration-700" 
+                      />
+                      <div className="absolute bottom-2 right-2 opacity-80 text-2xl bg-white/50 rounded-full p-1">
+                        🐾
+                      </div>
                     </div>
-                    {/* Tape visual */}
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-rose-200/40 backdrop-blur-sm -rotate-1"></div>
                   </div>
                 </div>
@@ -344,40 +460,40 @@ function BookPage({ onNext }) {
                   <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/paper.png')] opacity-60 mix-blend-multiply" />
                   <div className="relative z-10 text-slate-700 leading-loose font-serif text-lg md:text-xl">
                     <span className="text-4xl text-rose-400 font-serif leading-[0] float-left mr-2 mt-2">"</span>
-                    <p className="mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <p className="mb-6">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    
+                    <p className="mb-6">{currentStory.text1}</p>
+                    <p className="mb-6">{currentStory.text2}</p>
+                    
                     <p className="text-right italic text-rose-500 font-medium text-base mt-4 border-t border-rose-200 pt-4 inline-block ml-auto w-full">
-                      With all my love 
+                      {currentStory.highlight}
                     </p>
                   </div>
                   <div className="absolute bottom-4 right-6 text-slate-400 text-xs font-serif italic flex items-center gap-1">
-                     🐱 Page {chapter + 1}
+                      🐱 Page {chapter + 1} of {chapters}
                   </div>
                 </div>
-              </>
-            ) : (
-              <PhotoGallery />
+              </div>
             )}
           </motion.div>
         </AnimatePresence>
         
-        {/* Navigation Buttons (Floating) */}
+        {/* Navigation Buttons */}
         <div className="absolute top-1/2 -translate-y-1/2 -left-4 md:-left-12 z-20">
             <button 
                 disabled={chapter === 0} 
                 onClick={() => navigate(chapter - 1)} 
-                className="p-4 bg-white/10 backdrop-blur-md rounded-full hover:bg-white/20 disabled:opacity-0 transition-all text-white shadow-lg"
+                className="p-4 bg-white/10 backdrop-blur-md rounded-full hover:bg-white/20 disabled:opacity-0 transition-all text-white shadow-lg group"
             >
-                <ChevronRight className="rotate-180 w-6 h-6" />
+                <ChevronRight className="rotate-180 w-6 h-6 group-hover:scale-125 transition-transform" />
             </button>
         </div>
         <div className="absolute top-1/2 -translate-y-1/2 -right-4 md:-right-12 z-20">
             <button 
                 disabled={chapter === chapters - 1} 
                 onClick={() => navigate(chapter + 1)} 
-                className="p-4 bg-white/10 backdrop-blur-md rounded-full hover:bg-white/20 disabled:opacity-0 transition-all text-white shadow-lg"
+                className="p-4 bg-white/10 backdrop-blur-md rounded-full hover:bg-white/20 disabled:opacity-0 transition-all text-white shadow-lg group"
             >
-                <ChevronRight className="w-6 h-6" />
+                <ChevronRight className="w-6 h-6 group-hover:scale-125 transition-transform" />
             </button>
         </div>
       </div>
@@ -387,39 +503,6 @@ function BookPage({ onNext }) {
             Proceed to Video
         </button>
       </div>
-    </div>
-  );
-}
-
-function PhotoGallery() {
-  const photos = [
-    "https://images.unsplash.com/photo-1516575334481-f85287c2c81d?q=80&w=400&fit=crop", 
-    "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=400&fit=crop", 
-    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&fit=crop", 
-    "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=400&fit=crop"
-  ];
-
-  return (
-    <div className="w-full h-full p-8 overflow-y-auto bg-[#fff1f2] relative">
-       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/paper.png')] opacity-60 mix-blend-multiply" />
-       <div className="relative z-10">
-            <h3 className="text-2xl mb-8 text-center font-serif text-rose-800 italic flex items-center justify-center gap-3">
-               <span className="text-3xl">🐾</span> Our Beautiful Memories <span className="text-3xl">🐾</span>
-            </h3>
-            <div className="grid grid-cols-2 gap-4">
-            {photos.map((p, i) => (
-                <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    className="aspect-square p-2 bg-white shadow-md rotate-1 hover:rotate-0 transition-all duration-300"
-                >
-                    <img src={p} className="w-full h-full object-cover filter sepia-[0.2]" />
-                </motion.div>
-            ))}
-            </div>
-        </div>
     </div>
   );
 }
@@ -500,7 +583,7 @@ function ConclusionPage() {
             This digital space is just a tiny reflection of the universe you mean to me. 
             May your year be as beautiful as your smile (and as cute as a kitten).
           </p>
-          <p className="text-3xl text-rose-400 font-handwriting">Happy Birthday, my love.</p>
+          <p className="text-3xl text-rose-400 font-handwriting">Happy Birthday, श्रेया .</p>
         </motion.div>
       )}
     </div>
