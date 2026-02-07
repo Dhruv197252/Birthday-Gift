@@ -1,30 +1,20 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, Lock, Sparkles, ChevronRight, Music, Volume2, VolumeX } from "lucide-react";
+import { Heart, Sparkles, ChevronRight } from "lucide-react";
 
-// ===================== CONFIG =====================
-const HER_NAME = "SHREYA"; // <-- change this
-const PASSWORD = "25022005"; // <-- change this
-// Note: Changed to a web URL for preview. Replace with "/music.mp3" for your local file.
-const MUSIC_SRC = "music.webm"; 
 
-// ==================================================
-// 📸 PUT HER PHOTOS HERE
-// These images will appear in the background ONLY when "Happy Birthday" pops out.
-// ==================================================
+const HER_NAME = "SHREYA"; 
+const PASSWORD = "25022005"; 
+
 const LANDING_BG_IMAGES = [
-  // "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop",
-  "/PIC.jpg",
+  "/pic12.jpg",
+  "/pic6.jpg",
   "/pic10.jpg",
   "/pic9.jpg",
   "/pic8.jpg",
+  "/PIC.jpg",
   "/pic7.jpg",
-  "/pic6.jpg",
-
-
-  // "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop",
-  // "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1000&auto=format&fit=crop"
 ];
 
 export default function BirthdayWebsite() {
@@ -40,13 +30,11 @@ function MainSite({ page, setPage }) {
   const pages = [
     <LandingPage onNext={() => setPage(1)} key="landing" />,
     <BookPage onNext={() => setPage(2)} key="book" />,
-    <VideoPage onNext={() => setPage(3)} key="video" />,
     <ConclusionPage key="conclusion" />,
   ];
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-rose-900 via-red-950 to-black text-rose-50 flex flex-col font-sans selection:bg-rose-500/30">
-      <BackgroundMusic />
       
       {/* Ambient Light Effects */}
       <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
@@ -54,7 +42,7 @@ function MainSite({ page, setPage }) {
         <div className="absolute bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-pink-600/20 rounded-full blur-[100px] animate-pulse delay-1000"></div>
       </div>
 
-      {/* Floating Elements */}
+      {/* Floating Elements (Now using Static Arrays to fix Linter Errors) */}
       <FloatingHearts />
       <RosePetals />
       <FloatingPaws />
@@ -98,7 +86,6 @@ function PasswordGate({ onUnlock }) {
         className="bg-white/5 p-8 md:p-12 rounded-[2rem] backdrop-blur-xl text-center w-full max-w-md border border-white/10 shadow-[0_0_40px_rgba(225,29,72,0.2)]"
       >
         <div className="bg-gradient-to-br from-rose-500 to-red-600 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg shadow-rose-500/30">
-           {/* Replaced Icon with Emoji for stability */}
            <span className="text-4xl">🐱</span>
         </div>
         <h2 className="text-3xl mb-3 font-serif italic tracking-wide">Secret Entry</h2>
@@ -111,7 +98,7 @@ function PasswordGate({ onUnlock }) {
           placeholder="Enter password"
           className="w-full p-4 rounded-xl bg-black/20 mb-4 outline-none border border-white/5 focus:border-rose-400/50 transition-colors text-center tracking-[0.5em] text-lg placeholder:tracking-normal placeholder:text-white/20"
         />
-        {error && <p className="text-rose-400 mb-4 text-sm animate-pulse font-medium">Koi na, Ek aur baar try karlo, PLEASE!!! 🐾</p>}
+        {error && <p className="text-rose-400 mb-4 text-sm animate-pulse font-medium">Koi na, Ek aur baar try karlo, PLEASE!!! </p>}
         <button 
           onClick={check} 
           className="w-full py-4 bg-gradient-to-r from-rose-600 to-pink-600 rounded-xl font-bold shadow-lg shadow-rose-900/40 hover:scale-[1.02] hover:shadow-rose-500/20 transition-all duration-300 flex items-center justify-center gap-2"
@@ -127,8 +114,7 @@ function PasswordGate({ onUnlock }) {
 function Navbar({ page, setPage }) {
   const links = [
     { name: "Home", icon: Heart },
-    { name: "Story", icon: null, emoji: "🐾" }, // Using Emoji for cat items
-    { name: "Video", icon: Sparkles },
+    { name: "Story", icon: null, emoji: "🐾" }, 
     { name: "Gift", icon: null, emoji: "🐱" }
   ];
   return (
@@ -155,44 +141,39 @@ function Navbar({ page, setPage }) {
   );
 }
 
-// ================= LANDING (UPDATED) =================
+// ================= LANDING =================
 function LandingPage({ onNext }) {
   const [stage, setStage] = useState(0);
   const [typedText, setTypedText] = useState("");
   const [bgIndex, setBgIndex] = useState(0);
   const fullText = "INDEED!!! it has to be YOUUUUUUUU";
 
-  // Background rotater for final stage
   useEffect(() => {
     if (stage === 4) {
       const interval = setInterval(() => {
         setBgIndex(prev => (prev + 1) % LANDING_BG_IMAGES.length);
-      }, 6000); // Slower background rotation
+      }, 6000); 
       return () => clearInterval(interval);
     }
   }, [stage]);
 
-  // Sequence Controller
   useEffect(() => {
     let timer;
-    if (stage === 0) timer = setTimeout(() => setStage(1), 3000); // "You know what?"
-    else if (stage === 1) timer = setTimeout(() => setStage(2), 9000); // "21 years ago..."
-    else if (stage === 2) timer = setTimeout(() => setStage(3), 6000); // "Guess her name..."
+    if (stage === 0) timer = setTimeout(() => setStage(1), 3000);
+    else if (stage === 1) timer = setTimeout(() => setStage(2), 9000);
+    else if (stage === 2) timer = setTimeout(() => setStage(3), 6000);
     else if (stage === 3) {
-      // Typewriter logic for "Yes, it is you..."
       if (typedText.length < fullText.length) {
         timer = setTimeout(() => {
           setTypedText(fullText.slice(0, typedText.length + 1));
-        }, 200); // Much slower typing speed (400ms per letter)
+        }, 200); 
       } else {
-        // Finished typing, wait a bit then reveal
         timer = setTimeout(() => setStage(4), 1500);
       }
     }
     return () => clearTimeout(timer);
   }, [stage, typedText]);
 
-  // Framer Motion variants for text fading - Smoother
   const fadeText = {
     initial: { opacity: 0, y: 30, filter: "blur(10px)" },
     animate: { opacity: 1, y: 0, filter: "blur(0px)" },
@@ -200,9 +181,6 @@ function LandingPage({ onNext }) {
     transition: { duration: 1.5, ease: "easeInOut" }
   };
 
-  // --- RENDERING STAGES ---
-
-  // Stages 0-2: Intro Text
   if (stage < 3) {
     return (
       <div className="relative w-full h-[70vh] flex items-center justify-center text-center px-4 max-w-4xl mx-auto">
@@ -227,7 +205,6 @@ function LandingPage({ onNext }) {
     );
   }
 
-  // Stage 3: Typewriter Effect
   if (stage === 3) {
     return (
       <div className="relative w-full h-[70vh] flex items-center justify-center">
@@ -239,10 +216,8 @@ function LandingPage({ onNext }) {
     );
   }
 
-  // Stage 4: Final Surprise Reveal
   return (
     <div className="relative w-full h-[75vh] rounded-[2rem] overflow-hidden shadow-2xl flex items-center justify-center border border-white/10 group">
-      {/* Background Slideshow */}
       <AnimatePresence mode="wait">
         <motion.div 
           key={bgIndex}
@@ -255,11 +230,9 @@ function LandingPage({ onNext }) {
         />
       </AnimatePresence>
       
-      {/* Cinematic Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-rose-950 via-rose-950/40 to-rose-950/80" />
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
 
-      {/* Content */}
       <div className="relative z-10 text-center px-6">
         <motion.div 
           initial={{ scale: 0.9, opacity: 0, y: 50 }} 
@@ -293,48 +266,34 @@ function LandingPage({ onNext }) {
   );
 }
 
-
-
-
-// ================= BOOK (ROMANTIC & JOYFUL EDITION) =================
-
+// ================= BOOK PAGE =================
 function BookPage({ onNext }) {
-  // 1. CONFIGURATION: Stories for the first 3 pages
   const storyContent = [
     {
       id: 1,
-      image: "/pic1.jpg", 
-      text1: "The first time we met, I honestly didn't think much of it.",
-      text2: "But as the days went by, I realized that my smile started appearing more often when you were around.",
-      highlight: "It was the beginning of everything."
+      image: "/pic11.jpg", 
+      text1: "A small gift for you!!! I hope tujhe accha lage..21 years!!Bohot zyada lag raha hoga na ab?? accha Shreya tu bhi aisa sochti hogi na ki 10 years pehle, you were excited to turn 11 from 10 aur ab tujhe 21 bada number lag raha hai!!! maybe shyd zindagi mein bohot kuch dekh lete hai jisse ye moments hum celebrate nahi karna chahte ya celebrate karna chahte par with a mind full of various other thoughts...",
+      text2: "But the fact is..from 2005 onwards, 25th February is a special date!! special bolu ya gracious ya honored ya beautiful ya koi aur adjective sab kam hi hai na...Since the year 2005, 25th of February has carried your name in time. SHREYA, a name which itself means auspicious, beautiful, excellent, prosperous...so along with saying Happy Birthday SHREYA, I will also say, HAPPY SHREYA-DAY!!!",
+      highlight: "🌹🌹🌹🌹🌹"
     },
     {
       id: 2,
       image: "/pic2.jpg", 
-      text1: "Do you remember that late night conversation?",
-      text2: "We talked about stars and dreams, and I realized that my favorite dream was actually sitting right in front of me.",
-      highlight: "You became my safe space."
+      text1: "Shreya, I barely know about your life..kya chal raha hai kya nahi mujhe nahi pata..par itna zarur pata ki bohot si baatein hongi jo tu shyd kisi se kehti nahi...Wo baatein jo shyd tujhe andar hi andar hurt hongi...and then fir bhi tu apni zimmedariyaan nibhati hai, aur aage badhti rehti hai jaise sab theek ho.. bina kisi ko dikhaye... Yahi toh baatein hai which makes you special!!! Shreya teri Niyat hamesha se saaf rahi hai na...and that thing makes you Beautiful...You are not rare, You are Unique!!!! If the intention behind every step in your life is positive then the end result will be positive!!! You are God's favorite child....You are gentle, but not weak and that balance is rare....You will lead to a life where you will be the reason why people will feel blessed to have you in their lives!!!",
+      text2: " Being the Elder Daughter, only YOU know how much it takes be YOU.. and being a girl it is difficult to handle all the stereotypes of this society..",
+      highlight: "🌹🌹🌹🌹🌹"
     },
     {
       id: 3,
       image: "/pic3.jpg", 
-      text1: "And now, here we are. 21 beautiful years of your existence.",
-      text2: "I cannot promise to solve all your problems, but I promise you won't have to face them alone.",
-      highlight: "I love you, always."
+      text1: "Apne sapne pura karna Shreya!!! not just because tujhe karna hai but apni mummy ke liye papa ke liye...Mummy logo ki zindagi bohot KATHOR rahi hai...aur mujhe pata hai tu har wo chiz karna chahti hai, har wo chiz dena chahti hai to your mummy jinki wo haqdaar hai!!! and also for your papa...aksar hum sab lambe lambe speeches mein unka zikar karna bhul jaate hai...Yes Shreya, you will buy your own Car, your own House, and everything which you want to and wo sab khud se, apne dam par....and I truly with all pure intentions wish that these things do come true for you!!!! May you gift your parents a House at the '25th' floor of a Sky Scraper Building...",
+      text2: "You will be the bliss your parents always prayed for, the quiet reward for every sacrifice they made, every dream they set aside. In your happiness, they will find peace. Not only through your achievements, but through the grace with which you live and the goodness you carry, you will remain their greatest blessing!!!",
+      highlight: "🌹🌹🌹🌹🌹"
     }
   ];
 
-  // 2. CONFIGURATION: Images for the Collage (Page 4) - 6 Photos
-  const collageImages = [
-    "/pic4.jpg", 
-    "/pic3.jpg", 
-    "/pic6.jpg", 
-    "/pic7.jpg",
-    "/pic8.jpg",
-    "/pic9.jpg"
-  ];
-
-  const chapters = 4; // 3 Stories + 1 Collage
+  const collageImages = ["/pic3.jpg", "/pic6.jpg", "/pic15.jpg", "/pic4.jpg", "/pic12.jpg", "/pic14.jpg"];
+  const chapters = 4;
   const [chapter, setChapter] = useState(0);
   const [direction, setDirection] = useState(0);
 
@@ -368,24 +327,17 @@ function BookPage({ onNext }) {
                 isCollage ? "" : "bg-[#fff1f2] border-[#fce7f3]"
             }`}
           >
-            {/* CONDITIONAL RENDERING */}
             {isCollage ? (
-               // === DREAMY COLLAGE PAGE (Page 4) ===
                <div className="relative w-full h-full min-h-[600px] overflow-hidden flex flex-col items-center justify-center p-8">
-                 
-                 {/* 1. ROMANTIC BACKGROUND: Soft Sunset Gradient */}
                  <div className="absolute inset-0 bg-gradient-to-br from-pink-200 via-rose-100 to-orange-100" />
-                 
-                 {/* 2. FAIRY LIGHTS / ORBS: Floating ambient glows */}
                  <div className="absolute top-[-20%] left-[-20%] w-96 h-96 bg-purple-300/30 rounded-full blur-[80px] animate-pulse"></div>
                  <div className="absolute bottom-[-20%] right-[-20%] w-96 h-96 bg-yellow-200/40 rounded-full blur-[80px] animate-pulse delay-1000"></div>
 
-                 {/* Content Container (Glassmorphism) */}
                  <div className="relative z-10 w-full max-w-4xl">
                      <motion.div 
-                        initial={{ y: -20, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        className="text-center mb-8"
+                       initial={{ y: -20, opacity: 0 }}
+                       animate={{ y: 0, opacity: 1 }}
+                       className="text-center mb-8"
                      >
                        <div className="inline-block bg-white/40 backdrop-blur-sm px-6 py-2 rounded-full border border-white/50 shadow-sm mb-4">
                            <span className="text-rose-500 font-bold tracking-widest text-xs uppercase">The Birthday Girl</span>
@@ -395,7 +347,6 @@ function BookPage({ onNext }) {
                        </h2>
                      </motion.div>
 
-                     {/* 3 Columns x 2 Rows Grid */}
                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
                         {collageImages.map((img, index) => (
                           <motion.div 
@@ -408,19 +359,17 @@ function BookPage({ onNext }) {
                           >
                              <div className="w-full h-full overflow-hidden rounded-lg relative">
                                <img src={img} className="w-full h-full object-cover" alt="Memory" />
-                               {/* Shine effect overlay */}
                                <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                              </div>
                           </motion.div>
                         ))}
                      </div>
 
-                     {/* The Poem Note */}
                      <motion.div 
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.8 }}
-                        className="mt-10 text-center"
+                       initial={{ opacity: 0, y: 20 }}
+                       animate={{ opacity: 1, y: 0 }}
+                       transition={{ delay: 0.8 }}
+                       className="mt-10 text-center"
                      >
                         <div className="bg-white/60 backdrop-blur-md border border-white/60 p-6 rounded-2xl shadow-sm inline-block max-w-lg mx-auto">
                              <p className="text-rose-800 font-handwriting text-xl md:text-2xl leading-relaxed">
@@ -433,11 +382,8 @@ function BookPage({ onNext }) {
                      </motion.div>
                  </div>
                </div>
-
             ) : (
-              // === STORY PAGES (Pages 1-3) ===
               <div className="flex flex-col md:flex-row min-h-[600px]">
-                {/* Left Page (Image) */}
                 <div className="w-full md:w-1/2 p-6 md:p-10 flex items-center justify-center bg-[#fff1f2] border-b md:border-b-0 md:border-r border-rose-200/50 relative">
                   <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/paper.png')] opacity-60 mix-blend-multiply" />
                   <div className="relative w-full aspect-[3/4] bg-white p-3 shadow-xl rotate-[-2deg] transition-transform hover:rotate-0 duration-500">
@@ -447,23 +393,18 @@ function BookPage({ onNext }) {
                         alt="Memory" 
                         className="w-full h-full object-cover opacity-90 hover:scale-110 transition-transform duration-700" 
                       />
-                      <div className="absolute bottom-2 right-2 opacity-80 text-2xl bg-white/50 rounded-full p-1">
-                        🐾
-                      </div>
+                      <div className="absolute bottom-2 right-2 opacity-80 text-2xl bg-white/50 rounded-full p-1">🐾</div>
                     </div>
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-rose-200/40 backdrop-blur-sm -rotate-1"></div>
                   </div>
                 </div>
 
-                {/* Right Page (Text) */}
                 <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-[#fff1f2] relative">
                   <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/paper.png')] opacity-60 mix-blend-multiply" />
                   <div className="relative z-10 text-slate-700 leading-loose font-serif text-lg md:text-xl">
                     <span className="text-4xl text-rose-400 font-serif leading-[0] float-left mr-2 mt-2">"</span>
-                    
                     <p className="mb-6">{currentStory.text1}</p>
                     <p className="mb-6">{currentStory.text2}</p>
-                    
                     <p className="text-right italic text-rose-500 font-medium text-base mt-4 border-t border-rose-200 pt-4 inline-block ml-auto w-full">
                       {currentStory.highlight}
                     </p>
@@ -477,7 +418,6 @@ function BookPage({ onNext }) {
           </motion.div>
         </AnimatePresence>
         
-        {/* Navigation Buttons */}
         <div className="absolute top-1/2 -translate-y-1/2 -left-4 md:-left-12 z-20">
             <button 
                 disabled={chapter === 0} 
@@ -500,202 +440,305 @@ function BookPage({ onNext }) {
 
       <div className="text-center">
         <button onClick={onNext} className="px-8 py-3 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full transition-all text-sm tracking-widest uppercase">
-            Proceed to Video
+            Bas ek Last Click, PLEASE!!!
         </button>
       </div>
     </div>
   );
 }
 
-// ================= VIDEO =================
-function VideoPage({ onNext }) {
-  return (
-    <div className="text-center max-w-4xl w-full px-4">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-        <h2 className="text-4xl md:text-5xl mb-10 font-serif text-rose-100 italic">A Message From My Heart</h2>
-        
-        <div className="relative aspect-video bg-black/40 rounded-3xl mb-12 flex items-center justify-center border border-white/10 shadow-[0_0_60px_rgba(225,29,72,0.15)] overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-br from-rose-900/20 to-black/60 z-0" />
-            
-            <motion.div 
-                whileHover={{ scale: 1.1 }}
-                className="relative z-10 w-24 h-24 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 shadow-lg cursor-pointer"
-            >
-                <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[24px] border-l-white border-b-[12px] border-b-transparent ml-2"></div>
-            </motion.div>
-            
-            <div className="absolute bottom-6 left-0 right-0 text-center">
-                <p className="text-rose-200/80 font-light tracking-wide text-sm">Tap to play our story</p>
-            </div>
-        </div>
-        
-        <button 
-            onClick={onNext} 
-            className="px-10 py-4 bg-gradient-to-r from-rose-600 to-pink-600 rounded-full font-bold shadow-lg shadow-rose-900/30 hover:scale-[1.02] transition-transform flex items-center gap-2 mx-auto"
-        >
-            Final Surprise <Sparkles className="w-5 h-5" />
-        </button>
-      </motion.div>
-    </div>
-  );
-}
-
 // ================= CONCLUSION =================
 function ConclusionPage() {
-  const [opened, setOpened] = useState(false);
+  const [step, setStep] = useState("box"); 
 
   return (
-    <div className="text-center max-w-2xl px-6">
-      {!opened ? (
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: "spring", stiffness: 100 }}
-          className="cursor-pointer group"
-          onClick={() => setOpened(true)}
-        >
-          <div className="relative">
-             <div className="absolute inset-0 bg-rose-500 blur-[60px] opacity-40 rounded-full animate-pulse"></div>
-             <motion.div
-                whileHover={{ scale: 1.05, rotate: 3 }}
-                className="relative w-56 h-56 bg-gradient-to-br from-rose-500 to-red-600 rounded-[2.5rem] mx-auto flex items-center justify-center shadow-2xl border border-white/20 z-10"
-             >
-                <span className="text-7xl drop-shadow-md">🎁</span>
-             </motion.div>
-          </div>
-          <p className="mt-8 text-2xl text-rose-100 font-serif italic group-hover:text-white transition-colors">Tap to open your final gift</p>
-        </motion.div>
-      ) : (
-        <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }} 
-            animate={{ opacity: 1, scale: 1 }} 
-            transition={{ duration: 0.8, ease: "backOut" }}
-            className="bg-white/5 p-10 md:p-14 rounded-[3rem] backdrop-blur-xl border border-white/10 shadow-2xl"
-        >
-          <div className="mb-8 relative inline-block">
-            <Heart className="w-16 h-16 text-rose-500 fill-rose-500 mx-auto animate-bounce-slow" />
-            <span className="absolute -bottom-2 -right-4 text-3xl drop-shadow-md rotate-12">🐱</span>
-          </div>
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 font-serif text-transparent bg-clip-text bg-gradient-to-r from-rose-100 via-white to-rose-100">
-            Forever & Always
-          </h2>
-          <p className="text-rose-100/90 mb-10 text-lg leading-relaxed font-light">
-            This digital space is just a tiny reflection of the universe you mean to me. 
-            May your year be as beautiful as your smile (and as cute as a kitten).
-          </p>
-          <p className="text-3xl text-rose-400 font-handwriting">Happy Birthday, श्रेया .</p>
-        </motion.div>
-      )}
+    <div className="text-center max-w-2xl px-6 w-full relative z-20">
+      <AnimatePresence mode="wait">
+        
+        {/* STEP 1: THE GIFT BOX */}
+        {step === "box" && (
+          <motion.div
+            key="box"
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 1.2, opacity: 0, filter: "blur(10px)" }}
+            transition={{ type: "spring", stiffness: 100 }}
+            className="cursor-pointer group relative"
+            onClick={() => setStep("cake")}
+          >
+            <div className="absolute inset-0 bg-rose-500 blur-[80px] opacity-30 rounded-full animate-pulse"></div>
+            
+            <motion.div
+              whileHover={{ scale: 1.05, rotate: 3 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative w-56 h-56 bg-gradient-to-br from-rose-600 to-red-700 rounded-[2rem] mx-auto flex items-center justify-center shadow-[0_20px_50px_rgba(225,29,72,0.5)] border border-white/20 z-10"
+            >
+               <span className="text-8xl drop-shadow-2xl">🎁</span>
+            </motion.div>
+            
+            <motion.p 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="mt-8 text-2xl text-rose-100 font-serif italic tracking-wide group-hover:text-white transition-colors"
+            >
+              CLICK CLICK....<br/>
+              <span className="text-sm opacity-60 font-sans not-italic uppercase tracking-widest">(Tap to open)</span>
+            </motion.p>
+          </motion.div>
+        )}
+
+        {/* STEP 2: THE REALISTIC CAKE */}
+        {step === "cake" && (
+          <motion.div
+            key="cake"
+            initial={{ opacity: 0, scale: 0.8, y: 50 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: -20 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="relative pb-10"
+          >
+            <h2 className="text-3xl font-serif text-rose-100 italic mb-8">
+              Make a wish & blow the candle...<br/>
+              <span className="text-lg font-sans opacity-70 not-italic">Tap the flame! 🕯️</span>
+            </h2>
+
+            {/* CAKE CONTAINER */}
+            <div className="relative w-64 h-64 mx-auto mt-20 flex flex-col items-center justify-end">
+              
+              {/* Plate */}
+              <div className="absolute bottom-0 w-80 h-24 bg-white/10 rounded-[50%] blur-sm -z-10 shadow-2xl"></div>
+              <div className="absolute bottom-2 w-72 h-16 bg-gradient-to-b from-gray-100 to-gray-300 rounded-[50%] z-0 border-b-4 border-gray-400"></div>
+
+              {/* Bottom Tier */}
+              <div className="absolute bottom-8 w-64 h-24 bg-gradient-to-r from-rose-300 via-rose-200 to-rose-300 rounded-xl shadow-2xl border-b-8 border-rose-400/50 z-10 relative">
+                 {/* Icing Drips */}
+                 <div className="absolute top-0 w-full h-8 bg-white rounded-b-xl shadow-sm z-20 flex justify-around overflow-hidden">
+                     {[...Array(7)].map((_,i) => (
+                        <div key={i} className="w-8 h-10 bg-white rounded-b-full -mt-4 shadow-sm"></div>
+                     ))}
+                 </div>
+              </div>
+
+              {/* Top Tier */}
+              <div className="absolute bottom-[8rem] w-44 h-20 bg-gradient-to-r from-rose-300 via-rose-200 to-rose-300 rounded-xl shadow-xl border-b-4 border-rose-400/50 z-20 relative">
+                 {/* Icing Drips */}
+                 <div className="absolute top-0 w-full h-8 bg-white rounded-b-xl shadow-sm z-30 flex justify-around overflow-hidden">
+                    {[...Array(5)].map((_,i) => (
+                        <div key={i} className="w-8 h-8 bg-white rounded-b-full -mt-4 shadow-sm"></div>
+                     ))}
+                 </div>
+                 
+                 {/* Cherries */}
+                 <div className="absolute -top-3 left-2 w-6 h-6 bg-red-600 rounded-full shadow-inner z-40"></div>
+                 <div className="absolute -top-3 right-2 w-6 h-6 bg-red-600 rounded-full shadow-inner z-40"></div>
+                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-6 h-6 bg-red-600 rounded-full shadow-inner z-40"></div>
+              </div>
+
+              {/* Candle */}
+              <div className="absolute bottom-[13rem] left-1/2 -translate-x-1/2 w-4 h-20 bg-gradient-to-b from-yellow-100 to-yellow-200 border border-yellow-300/50 rounded-md z-30 shadow-lg">
+                  <div className="absolute w-full h-2 bg-red-400 top-4 opacity-50 rotate-12"></div>
+                  <div className="absolute w-full h-2 bg-red-400 top-10 opacity-50 -rotate-12"></div>
+              </div>
+
+              {/* FLAME (INTERACTIVE) */}
+              <motion.div
+                 className="absolute bottom-[18rem] left-1/2 -translate-x-1/2 cursor-pointer z-50 origin-bottom"
+                 onClick={() => setStep("card")}
+                 animate={{ 
+                   scale: [1, 1.1, 1], 
+                   rotate: [-3, 3, -3],
+                   filter: ["brightness(1)", "brightness(1.3)", "brightness(1)"]
+                 }}
+                 transition={{ repeat: Infinity, duration: 0.2 }}
+                 whileHover={{ scale: 1.3 }}
+              >
+                 {/* Outer Glow */}
+                 <div className="w-10 h-14 bg-orange-400/50 rounded-full blur-xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+                 {/* Inner Flame */}
+                 <div className="w-4 h-8 bg-gradient-to-t from-red-500 via-orange-400 to-yellow-200 rounded-[50%_50%_50%_50%_/_60%_60%_40%_40%] shadow-[0_0_20px_rgba(255,165,0,0.8)] border-2 border-yellow-200"></div>
+              </motion.div>
+
+            </div>
+          </motion.div>
+        )}
+
+        {}
+        {step === "card" && (
+           <motion.div 
+             key="card"
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ duration: 1, delay: 0.5 }}
+             className="bg-white/10 p-10 md:p-14 rounded-[3rem] backdrop-blur-2xl border border-white/20 shadow-[0_0_60px_rgba(225,29,72,0.3)] relative overflow-hidden"
+           >
+             {}
+             <motion.div 
+                initial={{ opacity: 1, y: 100, scale: 0.5 }}
+                animate={{ opacity: 0, y: -100, scale: 2 }}
+                transition={{ duration: 2 }}
+                className="absolute inset-0 bg-gray-400/20 blur-3xl pointer-events-none"
+             />
+
+             <Confetti />
+
+             <div className="mb-8 relative inline-block">
+               <Heart className="w-16 h-16 text-rose-500 fill-rose-500 mx-auto animate-bounce" />
+               <span className="absolute -bottom-2 -right-4 text-3xl rotate-12">🥳</span>
+             </div>
+             
+             <h2 className="text-4xl md:text-6xl font-bold mb-6 font-serif text-transparent bg-clip-text bg-gradient-to-r from-rose-100 via-white to-rose-100 drop-shadow-md">
+               Wish Granted. ✨
+             </h2>
+             
+             <p className="text-rose-100/90 mb-8 text-lg leading-relaxed font-light italic">
+             "May the wish you just made find its way to the universe and return to you wrapped in magic.
+This little corner of the internet, these words on the screen, are only a gentle reminder that, Shreya,
+you are cherished, admired, and deeply celebrated… today, tomorrow, and in every moment that follows. ✨"
+             </p>
+
+             <p className="text-3xl text-rose-400 font-handwriting">
+               Happy Birthday, {HER_NAME} ❤️
+             </p>
+           </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
 
-// ================= EFFECTS =================
+
+
+function Confetti() {
+  const particles = [
+    { x: "10%", y: "20%", color: "bg-red-500", delay: 0.1 },
+    { x: "85%", y: "15%", color: "bg-blue-400", delay: 0.2 },
+    { x: "40%", y: "80%", color: "bg-yellow-400", delay: 0.3 },
+    { x: "90%", y: "60%", color: "bg-purple-500", delay: 0.1 },
+    { x: "20%", y: "75%", color: "bg-green-400", delay: 0.4 },
+    { x: "55%", y: "10%", color: "bg-red-400", delay: 0.2 },
+    { x: "70%", y: "90%", color: "bg-pink-400", delay: 0.5 },
+    { x: "15%", y: "45%", color: "bg-blue-500", delay: 0.3 },
+    { x: "30%", y: "30%", color: "bg-yellow-200", delay: 0.1 },
+    { x: "80%", y: "40%", color: "bg-purple-300", delay: 0.4 }
+  ];
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {particles.map((p, i) => (
+        <motion.div
+          key={i}
+          className={`absolute w-2 h-2 rounded-full ${p.color}`}
+          initial={{ x: "50%", y: "50%", opacity: 1, scale: 0 }}
+          animate={{ x: p.x, y: p.y, opacity: 0, scale: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut", delay: p.delay }}
+        />
+      ))}
+    </div>
+  );
+}
 
 function FloatingHearts() {
-  return Array.from({ length: 8 }).map((_, i) => (
-    <motion.div
-      key={i}
-      className="absolute text-rose-500/20 blur-[1px]"
-      initial={{ 
-        x: Math.random() * 100 + "vw", 
-        y: "110vh", 
-        scale: Math.random() * 0.5 + 0.3 
-      }}
-      animate={{ 
-        y: "-10vh", 
-        rotate: 360,
-        x: `calc(${Math.random() * 100}vw + ${Math.random() * 20 - 10}vw)`
-      }}
-      transition={{ 
-        duration: 25 + Math.random() * 15, // Slower duration
-        repeat: Infinity, 
-        delay: Math.random() * 10, 
-        ease: "linear" 
-      }}
-    >
-      ❤️
-    </motion.div>
-  ));
+ 
+  const hearts = [
+    { x: "10vw", delay: 0, duration: 25 },
+    { x: "80vw", delay: 5, duration: 30 },
+    { x: "30vw", delay: 2, duration: 22 },
+    { x: "60vw", delay: 8, duration: 28 },
+    { x: "90vw", delay: 12, duration: 26 },
+    { x: "20vw", delay: 15, duration: 24 },
+    { x: "50vw", delay: 20, duration: 29 },
+  ];
+
+  return (
+    <>
+      {hearts.map((h, i) => (
+        <motion.div
+          key={i}
+          className="absolute text-rose-500/20 blur-[1px]"
+          initial={{ x: h.x, y: "110vh", scale: 0.5 }}
+          animate={{ y: "-10vh", rotate: 360 }}
+          transition={{ 
+            duration: h.duration, 
+            repeat: Infinity, 
+            delay: h.delay, 
+            ease: "linear" 
+          }}
+        >
+          ❤️
+        </motion.div>
+      ))}
+    </>
+  );
 }
 
 function FloatingPaws() {
-  return Array.from({ length: 6 }).map((_, i) => (
-    <motion.div
-      key={i}
-      className="absolute text-rose-300/10 blur-[0.5px]"
-      initial={{ 
-        x: Math.random() * 100 + "vw", 
-        y: "110vh", 
-        rotation: 0
-      }}
-      animate={{ 
-        y: "-10vh", 
-        rotate: [0, 10, -10, 0],
-        x: `calc(${Math.random() * 100}vw + ${Math.random() * 30 - 15}vw)`
-      }}
-      transition={{ 
-        duration: 30 + Math.random() * 10, 
-        repeat: Infinity, 
-        delay: Math.random() * 5, 
-        ease: "linear" 
-      }}
-    >
-      <span className="text-2xl">🐾</span>
-    </motion.div>
-  ));
+  const paws = [
+    { x: "5vw", delay: 1 },
+    { x: "85vw", delay: 7 },
+    { x: "45vw", delay: 12 },
+    { x: "75vw", delay: 18 },
+    { x: "15vw", delay: 22 },
+  ];
+
+  return (
+    <>
+      {paws.map((p, i) => (
+        <motion.div
+          key={i}
+          className="absolute text-rose-300/10 blur-[0.5px]"
+          initial={{ x: p.x, y: "110vh" }}
+          animate={{ 
+            y: "-10vh", 
+            rotate: [0, 10, -10, 0],
+            x: [p.x, `calc(${p.x} + 10vw)`, `calc(${p.x} - 10vw)`]
+          }}
+          transition={{ 
+            duration: 35, 
+            repeat: Infinity, 
+            delay: p.delay, 
+            ease: "linear" 
+          }}
+        >
+          <span className="text-2xl">🐾</span>
+        </motion.div>
+      ))}
+    </>
+  );
 }
 
 function RosePetals() {
-  return Array.from({ length: 6 }).map((_, i) => (
-    <motion.div
-      key={i}
-      className="absolute text-pink-300/10"
-      initial={{ 
-        x: Math.random() * 100 + "vw", 
-        y: -20 
-      }}
-      animate={{ 
-        y: "110vh", 
-        rotate: 720, 
-        x: `calc(${Math.random() * 100}vw + ${Math.random() * 50 - 25}vw)` 
-      }}
-      transition={{ 
-        duration: 20 + Math.random() * 10, // Slower duration
-        repeat: Infinity, 
-        delay: Math.random() * 10, 
-        ease: "linear" 
-      }}
-    >
-      🌹
-    </motion.div>
-  ));
-}
+  const petals = [
+    { x: "2vw", delay: 0 },
+    { x: "25vw", delay: 4 },
+    { x: "55vw", delay: 9 },
+    { x: "70vw", delay: 14 },
+    { x: "95vw", delay: 19 },
+    { x: "35vw", delay: 24 },
+  ];
 
-function BackgroundMusic() {
-    const audioRef = useRef(null);
-    const [isPlaying, setIsPlaying] = useState(false);
-
-    const togglePlay = () => {
-        if (audioRef.current) {
-            if (isPlaying) {
-                audioRef.current.pause();
-            } else {
-                audioRef.current.play();
-            }
-            setIsPlaying(!isPlaying);
-        }
-    };
-
-    return (
-        <>
-            <audio ref={audioRef} src={MUSIC_SRC} loop />
-            <button 
-                onClick={togglePlay}
-                className="fixed bottom-6 right-6 z-50 p-3 bg-white/5 backdrop-blur-md rounded-full border border-white/10 text-rose-200/50 hover:text-rose-100 hover:bg-white/10 transition-all"
-            >
-                {isPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
-            </button>
-        </>
-    );
+  return (
+    <>
+      {petals.map((p, i) => (
+        <motion.div
+          key={i}
+          className="absolute text-pink-300/10"
+          initial={{ x: p.x, y: -20 }}
+          animate={{ 
+            y: "110vh", 
+            rotate: 720, 
+            x: [p.x, `calc(${p.x} + 20vw)`, `calc(${p.x} - 20vw)`]
+          }}
+          transition={{ 
+            duration: 25, 
+            repeat: Infinity, 
+            delay: p.delay, 
+            ease: "linear" 
+          }}
+        >
+          🌹
+        </motion.div>
+      ))}
+    </>
+  );
 }
